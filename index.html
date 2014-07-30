@@ -5,18 +5,16 @@
     <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <style>
       .rows {width:100%;}
-      .row {padding:0; width:100%; margin:10px; background-color:#eef; cursor:move;}
-      .row > li {cursor:move; background-color:#ccc; list-style-type:none; display:inline-block; vertical-align:middle; white-space:nowrap; background-color:#fcc; padding:10px; margin:10px;}
+      .row, #widgets {padding:0; width:100%; margin:10px; background-color:#eef; cursor:move;}
+      #widgets > li, .row > li {cursor:move; background-color:#ccc; list-style-type:none; display:inline-block; vertical-align:middle; white-space:nowrap; background-color:#fcc; padding:10px; margin:10px;}
     </style>
     <script>
       $(function() {
-          $(".row").sortable({
-              beforeStop: function(){
-                console.log('before stop');
-              }
-          });
+          $(".row").sortable({connectWith: ".row"});
 
           $("#rows").sortable({items: "> ul"});
+
+          $("#widgets").sortable({connectWith: ".row"});
       });
     </script>
   </head>
@@ -47,6 +45,14 @@
       </ul>
 
     </div>
+
+    <h2>Widgets</h2>
+    <ul id="widgets">
+      <li>Widget #1</li>
+      <li>Widget #2</li>
+      <li>Widget #3</li>
+      <li>Widget #4</li>
+    </ul>
 
   </body>
 </html>
