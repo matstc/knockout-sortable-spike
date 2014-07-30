@@ -4,28 +4,49 @@
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <style>
-      #sortable {margin:0; padding:0;}
-      #sortable li {cursor:pointer; margin:15px; background-color:#ccc; list-style-type:none; padding:15px;}
+      .rows {width:100%;}
+      .row {padding:0; width:100%; margin:10px; background-color:#eef; cursor:move;}
+      .row > li {cursor:move; background-color:#ccc; list-style-type:none; display:inline-block; vertical-align:middle; white-space:nowrap; background-color:#fcc; padding:10px; margin:10px;}
     </style>
     <script>
-    $(function() {
-        $( "#sortable" ).sortable();
-        $( "#sortable" ).disableSelection();
-        });
+      $(function() {
+          $(".row").sortable({
+              beforeStop: function(){
+                console.log('before stop');
+              }
+          });
+
+          $("#rows").sortable({items: "> ul"});
+      });
     </script>
   </head>
 
   <body>
 
-    <ul id="sortable">
-      <li><span></span>Item 1</li>
-      <li><span></span>Item 2</li>
-      <li><span></span>Item 3</li>
-      <li><span></span>Item 4</li>
-      <li><span></span>Item 5</li>
-      <li><span></span>Item 6</li>
-      <li><span></span>Item 7</li>
-    </ul>
+    <div id="rows">
+      
+      <ul class="row">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+      </ul>
+
+      <ul class="row">
+        <li>Item A</li>
+        <li>Item B</li>
+        <li>Item C</li>
+        <li>Item D</li>
+      </ul>
+
+      <ul class="row">
+        <li>Item W</li>
+        <li>Item X</li>
+        <li>Item Y</li>
+        <li>Item Z</li>
+      </ul>
+
+    </div>
 
   </body>
 </html>
