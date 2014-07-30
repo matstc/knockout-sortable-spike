@@ -20,9 +20,15 @@
           };
 
           viewModel.allItems = ko.observableArray([viewModel.firstItems, viewModel.secondItems, viewModel.thirdItems]);
+          viewModel.logVerticalMove = function(arg){
+            console.log('VERTICAL MOVE of ' + arg.item() + ' to ' + arg.targetIndex);
+          };
           viewModel.logMove = function(arg){
             console.log(arg.item + " was moved to index: " + arg.targetIndex);
-            viewModel.allItems().forEach(function(observableArray){observableArray.valueHasMutated()});
+            viewModel.allItems().forEach(function(observableArray){
+              //observableArray.valueHasMutated();
+              console.log(observableArray().join("  "));
+            });
           };
 
           ko.applyBindings(viewModel);
@@ -32,7 +38,7 @@
 
   <body>
 
-    <div id="rows" data-bind="sortable: {data: allItems, connectClass: false}">
+    <div id="rows" data-bind="sortable: {data: allItems, connectClass: false, afterMove: $root.logVerticalMove}">
       
       <ul class="row" data-bind="sortable: {data: $data, afterMove: $root.logMove}">
         <li data-bind="text: $data"></li>
