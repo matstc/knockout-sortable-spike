@@ -17,7 +17,11 @@
           viewModel = {
             firstItems : ko.observableArray(["Item 1", "Item 2", "Item 3", "Item 4"]),
             secondItems : ko.observableArray(["Item A", "Item B", "Item C", "Item D"]),
-            thirdItems : ko.observableArray(["Item W", "Item X", "Item Y", "Item Z"])
+            thirdItems : ko.observableArray(["Item W", "Item X", "Item Y", "Item Z"]),
+            logMove: function(arg){
+              console.log(arg.item + " was moved to index: " + arg.targetIndex);
+            }
+
           };
           ko.applyBindings(viewModel);
       });
@@ -28,15 +32,15 @@
 
     <div id="rows">
       
-      <ul class="row" data-bind="sortable: {data: firstItems}">
+      <ul class="row" data-bind="sortable: {data: firstItems, afterMove: logMove}">
         <li data-bind="text: $data"></li>
       </ul>
 
-      <ul class="row" data-bind="sortable: {data: secondItems}">
+      <ul class="row" data-bind="sortable: {data: secondItems, afterMove: logMove}">
         <li data-bind="text: $data"></li>
       </ul>
 
-      <ul class="row" data-bind="sortable: {data: thirdItems}">
+      <ul class="row" data-bind="sortable: {data: thirdItems, afterMove: logMove}">
         <li data-bind="text: $data"></li>
       </ul>
 
