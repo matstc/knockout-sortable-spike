@@ -12,17 +12,19 @@
     </style>
     <script>
       $(function() {
-          $("#rows").sortable({items: "> ul"});
-
           viewModel = {
             firstItems : ko.observableArray(["Item 1", "Item 2", "Item 3", "Item 4"]),
             secondItems : ko.observableArray(["Item A", "Item B", "Item C", "Item D"]),
             thirdItems : ko.observableArray(["Item W", "Item X", "Item Y", "Item Z"]),
-            logMove: function(arg){
-              console.log(arg.item + " was moved to index: " + arg.targetIndex);
-            }
-
+            widgets : ko.observableArray(['widget#1', 'widget#2', 'widget#3', 'widget#4'])
           };
+
+          viewModel.allItems = ko.observableArray([viewModel.firstItems, viewModel.secondItems, viewModel.thirdItems]);
+          viewModel.logMove = function(arg){
+            console.log(arg.item + " was moved to index: " + arg.targetIndex);
+            viewModel.allItems().forEach(function(observableArray){observableArray.valueHasMutated()});
+          };
+
           ko.applyBindings(viewModel);
       });
     </script>
@@ -30,28 +32,17 @@
 
   <body>
 
-    <div id="rows">
+    <div id="rows" data-bind="sortable: {data: allItems, connectClass: false}">
       
-      <ul class="row" data-bind="sortable: {data: firstItems, afterMove: logMove}">
-        <li data-bind="text: $data"></li>
-      </ul>
-
-      <ul class="row" data-bind="sortable: {data: secondItems, afterMove: logMove}">
-        <li data-bind="text: $data"></li>
-      </ul>
-
-      <ul class="row" data-bind="sortable: {data: thirdItems, afterMove: logMove}">
+      <ul class="row" data-bind="sortable: {data: $data, afterMove: $root.logMove}">
         <li data-bind="text: $data"></li>
       </ul>
 
     </div>
 
     <h2>Widgets</h2>
-    <ul id="widgets">
-      <li data-bind="draggable: 'widget#1'"><span data-bind="text: $data"></span></li>
-      <li data-bind="draggable: 'widget#2'"><span data-bind="text: $data"></span></li>
-      <li data-bind="draggable: 'widget#3'"><span data-bind="text: $data"></span></li>
-      <li data-bind="draggable: 'widget#4'"><span data-bind="text: $data"></span></li>
+    <ul id="widgets" data-bind="foreach: widgets">
+      <li data-bind="draggable: $data"><span data-bind="text: $data"></span></li>
     </ul>
 
   </body>
