@@ -3,6 +3,8 @@
   <head>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+    <script src="knockout-sortable.js"></script>
     <style>
       .rows {width:100%;}
       .row, #widgets {padding:0; width:100%; margin:10px; background-color:#eef; cursor:move;}
@@ -10,11 +12,14 @@
     </style>
     <script>
       $(function() {
-          $(".row").sortable({connectWith: ".row"});
-
           $("#rows").sortable({items: "> ul"});
 
-          $("#widgets").sortable({connectWith: ".row"});
+          viewModel = {
+            firstItems : ko.observableArray(["Item 1", "Item 2", "Item 3", "Item 4"]),
+            secondItems : ko.observableArray(["Item A", "Item B", "Item C", "Item D"]),
+            thirdItems : ko.observableArray(["Item W", "Item X", "Item Y", "Item Z"])
+          };
+          ko.applyBindings(viewModel);
       });
     </script>
   </head>
@@ -23,35 +28,26 @@
 
     <div id="rows">
       
-      <ul class="row">
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
+      <ul class="row" data-bind="sortable: {data: firstItems}">
+        <li data-bind="text: $data"></li>
       </ul>
 
-      <ul class="row">
-        <li>Item A</li>
-        <li>Item B</li>
-        <li>Item C</li>
-        <li>Item D</li>
+      <ul class="row" data-bind="sortable: {data: secondItems}">
+        <li data-bind="text: $data"></li>
       </ul>
 
-      <ul class="row">
-        <li>Item W</li>
-        <li>Item X</li>
-        <li>Item Y</li>
-        <li>Item Z</li>
+      <ul class="row" data-bind="sortable: {data: thirdItems}">
+        <li data-bind="text: $data"></li>
       </ul>
 
     </div>
 
     <h2>Widgets</h2>
     <ul id="widgets">
-      <li>Widget #1</li>
-      <li>Widget #2</li>
-      <li>Widget #3</li>
-      <li>Widget #4</li>
+      <li data-bind="draggable: 'widget#1'"><span data-bind="text: $data"></span></li>
+      <li data-bind="draggable: 'widget#2'"><span data-bind="text: $data"></span></li>
+      <li data-bind="draggable: 'widget#3'"><span data-bind="text: $data"></span></li>
+      <li data-bind="draggable: 'widget#4'"><span data-bind="text: $data"></span></li>
     </ul>
 
   </body>
