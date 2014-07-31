@@ -26,7 +26,6 @@
           viewModel.logMove = function(arg){
             console.log(arg.item + " was moved to index: " + arg.targetIndex);
             viewModel.allItems().forEach(function(observableArray){
-              //observableArray.valueHasMutated();
               console.log(observableArray().join("  "));
             });
           };
@@ -40,7 +39,7 @@
 
     <div id="rows" data-bind="sortable: {data: allItems, connectClass: false, afterMove: $root.logVerticalMove}">
       
-      <ul class="row" data-bind="sortable: {data: $data, afterMove: $root.logMove}">
+      <ul class="row" data-bind="sortable: {data: $rawData, afterMove: $root.logMove}">
         <li data-bind="text: $data"></li>
       </ul>
 
