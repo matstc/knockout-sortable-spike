@@ -4,6 +4,8 @@ The example has three rows that you can sort up and down. Each row has items tha
 
 The widgets are components that you can drop onto any of the row. They are not sortable within the widgets bar.
 
+See [screenshot](https://github.com/matstc/knockout-sortable-spike/blob/master/screenshot.png).
+
 # Tech stack
 
 - knockoutjs
